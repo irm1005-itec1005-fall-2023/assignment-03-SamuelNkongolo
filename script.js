@@ -85,7 +85,7 @@ function removeToDoItem(todoId) {
     }
     }
   }
-  console.log("NOT YET IMPLEMENTED"); // Remove this line when you start working on the function
+  
 
 
 // Function to mark a task as completed
@@ -95,9 +95,16 @@ function removeToDoItem(todoId) {
 // the function does not need to return anything
 function markToDoItemAsCompleted(todoId) {
   // Implement the logic to mark a task as completed here
+  const IndexMark = todoItems.findIndex((todo) => todo.id === todoId);
 
-  console.log("NOT YET IMPLEMENTED"); // Remove this line when you start working on the function
+  if (IndexMark !== -1) {
+    todoItems[IndexMark].completed = true;
+    console.log(`Todo item with id ${todoId} marked as completed.`);
+  } else {
+    console.log(`Todo item with id ${todoId} not found.`);
+  }
 }
+
 
 // Function to delete a task from the array
 // It should accept a number as a parameter (id of the todo item)
@@ -106,18 +113,25 @@ function markToDoItemAsCompleted(todoId) {
 // the function does not need to return anything, though you can return
 // true or false depending on whether the item was successfully deleted
 function deleteToDoItem(todoId) {
-  // Implement the logic to remove a task here
+  // Find the index of the todo item with the given todoId
+  const indexToDelete = todoItems.findIndex(todo => todo.id === todoId);
 
-  console.log("NOT YET IMPLEMENTED"); // Remove this line when you start working on the function
+  if (indexToDelete !== -1) {
+    
+    todoItems.splice(indexToDelete, 1);
+    console.log(`Todo item with id ${todoId} deleted successfully.`);
+  } else {
+    console.log(`Todo item with id ${todoId} not found.`);
+  }
 }
+
 
 // Function to clear all completed tasks
 // Loop through the array of todos, and when you find a todo item that is marked
 // as completed, remove it completely from the array
 function clearCompletedTasks() {
   // Implement the logic to clear completed tasks here
-
-  console.log("NOT YET IMPLEMENTED"); // Remove this line when you start working on the function
+      todoItems = todoItems.filter(todo => !todo.completed);
 }
 
 // You can write your own tests here if you would like to test
