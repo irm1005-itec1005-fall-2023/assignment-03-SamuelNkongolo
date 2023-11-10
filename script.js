@@ -76,9 +76,17 @@ function addToDoItem(text) {
 // the function does not need to return anything
 function removeToDoItem(todoId) {
   // Implement the logic to add a task here
+  for (let i = 0; 1 < todoItems.length; i++){
 
+    if(todoItems[i].id === todoId){
+  
+    todoItems.splice(i,1);
+     break;
+    }
+    }
+  }
   console.log("NOT YET IMPLEMENTED"); // Remove this line when you start working on the function
-}
+
 
 // Function to mark a task as completed
 // It should accept a number as a parameter (id of the todo item)
@@ -119,3 +127,5 @@ function clearCompletedTasks() {
 //  console.log(todoItems); // This should show the todo item you added
 //  removeToDoItem(0); // This should remove the todo item with ID 0 from the array
 //  markToDoItemAsCompleted(0); // This should mark the todo item with ID 0 as completed
+
+addToDoItem("Test ToDo"); 
