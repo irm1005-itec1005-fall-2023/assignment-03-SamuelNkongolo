@@ -129,3 +129,4 @@ function clearCompletedTasks() {
 //  markToDoItemAsCompleted(0); // This should mark the todo item with ID 0 as completed
 
 addToDoItem("Test ToDo"); 
+removeToDoItem(0); 
