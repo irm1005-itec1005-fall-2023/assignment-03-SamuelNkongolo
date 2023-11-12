@@ -48,24 +48,17 @@
 let todoItems = [];
 let unique = 0;
 
-// Function to add a todo to the list
-// It should accept a string as a parameter (text of the todo item)
-// and it should add a new todo item to the todoItems array
-// the function does not need to return anything
 function addToDoItem(text) {
   if (typeof text !== "string") {
-    console.log("Wrong input, please enter a string");
+    console.log("Error: Please enter a valid string for the todo item.");
     return false;
   }
-
-  // Increment unique before assigning it to the todo ID
-  unique++;
 
   let ID = unique;
 
   // Check if ID already exists, generate a new one if needed
   while (todoItems.some(item => item.id === ID)) {
-    ID = Math.floor(Math.random() * 9999);
+    ID++;
   }
 
   // Implement the logic to add a task here
@@ -75,16 +68,18 @@ function addToDoItem(text) {
     completed: false,
   };
   todoItems.push(todo);
-  console.log("Todo item added");
+  console.log("Todo item added successfully.");
 
   if (typeof text === "string") {
-    console.log("Thank you");
+    console.log("Thank you for adding a task.");
   }
 }
 
 // Example usage:
-addToDoItem("Order pizza");
+addToDoItem("Buy groceries");
 addToDoItem("Read a book");
+
+console.log(todoItems);
 
 console.log(todoItems);
 
