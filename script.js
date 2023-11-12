@@ -46,42 +46,28 @@
 // Initialise an empty array with the variable name todoItems
 
 let todoItems = [];
-let unique = 0;
+let unique = [0]; 
 
+// Function to add a todo to the list
+// It should accept a string as a parameter (text of the todo item)
+// and it should add a new todo item to the todoItems array
+// the function does not need to return anything
 function addToDoItem(text) {
-  if (typeof text !== "string") {
-    console.log("Error: Please enter a valid string for the todo item.");
-    return false;
-  }
-
-  let ID = unique;
-
-  // Check if ID already exists, generate a new one if needed
-  while (todoItems.some(item => item.id === ID)) {
-    ID++;
+  if (typeof text !== "string"){
+    console.log("Wrong input, please enter a string");
+    return false
   }
 
   // Implement the logic to add a task here
-  let todo = {
-    id: ID,
+   let todo = {
+    id: unique,
     text: text,
     completed: false,
   };
   todoItems.push(todo);
-  console.log("Todo item added successfully.");
-
-  if (typeof text === "string") {
-    console.log("Thank you for adding a task.");
-  }
+  unique[0]++;
+  console.log("Todoitem added"); // Remove this line when you start working on the function
 }
-
-// Example usage:
-addToDoItem("Buy groceries");
-addToDoItem("Read a book");
-
-console.log(todoItems);
-
-console.log(todoItems);
 
 // Function to remove a todo to the list
 // It should accept a number as a parameter (id of the todo item)
@@ -156,7 +142,7 @@ function clearCompletedTasks() {
 //  removeToDoItem(0); // This should remove the todo item with ID 0 from the array
 //  markToDoItemAsCompleted(0); // This should mark the todo item with ID 0 as completed
 
-addToDoItem("eat pizza"); 
+addToDoItem("Test ToDo"); 
 removeToDoItem(0); 
 console.log(todoItems); 
 markToDoItemAsCompleted(0);
