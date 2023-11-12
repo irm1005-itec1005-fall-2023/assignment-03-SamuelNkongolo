@@ -12,7 +12,7 @@ function addToDoItem(text) {
 
     // Check if ID already exists, generate a new one if needed
     while (todoItems.some(item => item.id === ID)) {
-      ID = Math.floor(Math.random() * 9999);
+      ID = w[0];
     }
 
     let Obj = { id: ID, text: text, completed: isCompleted };
@@ -102,18 +102,18 @@ function clearCompletedTasks() {
   let completedTasks = [];
 
   for (let i = 0; i < todoItems.length; i++) {
-    if (todoItems[i].completed) {
-      console.log("Completed task removed");
-    } else {
+    if (!todoItems[i].completed) {
       completedTasks.push(todoItems[i]);
     }
   }
 
   todoItems = completedTasks;
 }
+
 addToDoItem("First task");
-addToDoItem(123);
+addToDoItem("Second task");
 removeToDoItem(2);
 markToDoItemAsCompleted(1);
-deleteToDoItem(3); 
-clearCompletedTasks(1);
+deleteToDoItem(3);
+clearCompletedTasks();
+console.log(todoItems);
