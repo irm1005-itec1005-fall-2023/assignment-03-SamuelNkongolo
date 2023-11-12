@@ -1,18 +1,18 @@
 // Data storage - Initialize the array of To Do items
 let todoItems = [];
-let w = [0];
+let unique = [0];
 
 // Function to add a todo to the list
 function addToDoItem(text) {
   if (typeof text === "string") {
     console.log("Thank you");
-    w[0]++;
+    unique[0]++;
     let isCompleted = false;
-    let ID = w[0];
+    let ID = unique[0];
 
     // Check if ID already exists, generate a new one if needed
     while (todoItems.some(item => item.id === ID)) {
-      ID = w[0];
+      ID = unique[0];
     }
 
     let Obj = { id: ID, text: text, completed: isCompleted };
@@ -27,7 +27,7 @@ function addToDoItem(text) {
 function removeToDoItem(todoId) {
   if (Number.isInteger(todoId) && todoId > 0) {
     console.log("Good ID");
-    let newArray = [];
+    let diffArray = [];
     let removed = false;
 
     for (let i = 0; i < todoItems.length; i++) {
@@ -35,14 +35,14 @@ function removeToDoItem(todoId) {
         console.log("Removed");
         removed = true;
       } else {
-        newArray.push(todoItems[i]);
+        diffArray.push(todoItems[i]);
       }
     }
     if (!removed) {
       console.log("Todo item with the provided ID not found");
     }
 
-    todoItems = newArray;
+    todoItems = diffArray;
   } else {
     console.log("Please input a valid ID");
   }
@@ -75,7 +75,7 @@ function markToDoItemAsCompleted(todoId) {
 function deleteToDoItem(todoId) {
   if (Number.isInteger(todoId) && todoId > 0) {
     console.log("Good ID");
-    let newArray = [];
+    let goneArray = [];
     let removed = false;
 
     for (let i = 0; i < todoItems.length; i++) {
@@ -83,7 +83,7 @@ function deleteToDoItem(todoId) {
         console.log("Removed");
         removed = true;
       } else {
-        newArray.push(todoItems[i]);
+        goneArray.push(todoItems[i]);
       }
     }
 
@@ -91,7 +91,7 @@ function deleteToDoItem(todoId) {
       console.log("Todo item with the provided ID not found");
     }
 
-    todoItems = newArray;
+    todoItems = goneArray;
   } else {
     console.log("Please input a valid ID");
   }
