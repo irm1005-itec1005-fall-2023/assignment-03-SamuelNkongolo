@@ -46,27 +46,27 @@
 // Initialise an empty array with the variable name todoItems
 
 let todoItems = [];
-let unique = [0]; 
+let unique = 0;
 
 // Function to add a todo to the list
 // It should accept a string as a parameter (text of the todo item)
 // and it should add a new todo item to the todoItems array
 // the function does not need to return anything
 function addToDoItem(text) {
-  if (typeof text !== "string"){
+  if (typeof text !== "string") {
     console.log("Wrong input, please enter a string");
-    return false
+    return false;
   }
 
   // Implement the logic to add a task here
-   let todo = {
+  let todo = {
     id: unique,
     text: text,
     completed: false,
   };
   todoItems.push(todo);
-  unique[0]++;
-  console.log("Todoitem added"); // Remove this line when you start working on the function
+  unique++;
+  console.log("Todoitem added");
 }
 
 // Function to remove a todo to the list
