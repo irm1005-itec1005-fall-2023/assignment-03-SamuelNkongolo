@@ -116,4 +116,4 @@ addToDoItem(123);
 removeToDoItem(2);
 markToDoItemAsCompleted(1);
 deleteToDoItem(3); 
-clearCompletedTasks();
+clearCompletedTasks(1);
