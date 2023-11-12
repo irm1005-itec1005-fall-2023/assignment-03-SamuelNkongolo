@@ -110,10 +110,10 @@ function clearCompletedTasks() {
   todoItems = completedTasks;
 }
 
-addToDoItem("Third task");
-addToDoItem("Fourth task");
+addToDoItem("Complete coding assignment");
+addToDoItem("Schedule project meeting");
 removeToDoItem(1);
 markToDoItemAsCompleted(2);
-deleteToDoItem(4);
+deleteToDoItem(3);
 clearCompletedTasks();
 console.log(todoItems);
