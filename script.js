@@ -144,3 +144,5 @@ function clearCompletedTasks() {
 
 addToDoItem("Test ToDo"); 
 removeToDoItem(0); 
+console.log(todoItems); 
+markToDoItemAsCompleted(0);
