@@ -58,17 +58,35 @@ function addToDoItem(text) {
     return false;
   }
 
+  // Increment unique before assigning it to the todo ID
   unique++;
+
+  let ID = unique;
+
+  // Check if ID already exists, generate a new one if needed
+  while (todoItems.some(item => item.id === ID)) {
+    ID = Math.floor(Math.random() * 9999);
+  }
 
   // Implement the logic to add a task here
   let todo = {
-    id: unique,
+    id: ID,
     text: text,
     completed: false,
   };
   todoItems.push(todo);
-  console.log("Todoitem added");
+  console.log("Todo item added");
+
+  if (typeof text === "string") {
+    console.log("Thank you");
+  }
 }
+
+// Example usage:
+addToDoItem("Order pizza");
+addToDoItem("Read a book");
+
+console.log(todoItems);
 
 // Function to remove a todo to the list
 // It should accept a number as a parameter (id of the todo item)
