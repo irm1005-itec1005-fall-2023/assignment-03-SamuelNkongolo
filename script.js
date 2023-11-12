@@ -58,6 +58,8 @@ function addToDoItem(text) {
     return false;
   }
 
+  unique++;
+
   // Implement the logic to add a task here
   let todo = {
     id: unique,
@@ -65,7 +67,6 @@ function addToDoItem(text) {
     completed: false,
   };
   todoItems.push(todo);
-  unique++;
   console.log("Todoitem added");
 }
 
@@ -142,7 +143,7 @@ function clearCompletedTasks() {
 //  removeToDoItem(0); // This should remove the todo item with ID 0 from the array
 //  markToDoItemAsCompleted(0); // This should mark the todo item with ID 0 as completed
 
-addToDoItem("Test ToDo"); 
+addToDoItem("eat pizza"); 
 removeToDoItem(0); 
 console.log(todoItems); 
 markToDoItemAsCompleted(0);
