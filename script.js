@@ -46,7 +46,7 @@
 // Initialise an empty array with the variable name todoItems
 
 let todoItems = [];
-let unique = 1; 
+let unique = [0]; 
 
 // Function to add a todo to the list
 // It should accept a string as a parameter (text of the todo item)
@@ -65,7 +65,7 @@ function addToDoItem(text) {
     completed: false,
   };
   todoItems.push(todo);
-  unique++;
+  unique[0]++;
   console.log("Todoitem added"); // Remove this line when you start working on the function
 }
 
