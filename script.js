@@ -5,7 +5,7 @@ let unique = [0];
 // Function to add a todo to the list
 function addToDoItem(text) {
   if (typeof text === "string") {
-    console.log("Thank you");
+    console.log("Thanks a lot!");
     unique[0]++;
     let isCompleted = false;
     let ID = unique[0];
@@ -19,32 +19,32 @@ function addToDoItem(text) {
     todoItems.push(Obj);
     console.log(todoItems);
   } else {
-    console.log("Please input a string");
+    console.log("Please input a string, my friend");
   }
 }
 
 // Function to remove a todo from the list
 function removeToDoItem(todoId) {
   if (Number.isInteger(todoId) && todoId > 0) {
-    console.log("Good ID");
+    console.log("Nice choice of ID");
     let diffArray = [];
     let removed = false;
 
     for (let i = 0; i < todoItems.length; i++) {
       if (todoItems[i].id === todoId) {
-        console.log("Removed");
+        console.log("Successfully removed!");
         removed = true;
       } else {
         diffArray.push(todoItems[i]);
       }
     }
     if (!removed) {
-      console.log("Todo item with the provided ID not found");
+      console.log("Sorry, couldn't find the todo with that ID");
     }
 
     todoItems = diffArray;
   } else {
-    console.log("Please input a valid ID");
+    console.log("Please input a valid ID, my friend");
   }
 }
 
@@ -59,28 +59,28 @@ function markToDoItemAsCompleted(todoId) {
       if (todoItems[i].id === todoId) {
         todoItems[i].completed = true;
         found = true;
-        console.log("Marked as completed");
+        console.log("Successfully marked as completed!");
       }
     }
 
     if (!found) {
-      console.log("Todo item with the provided ID not found");
+      console.log("Couldn't find a todo with that ID");
     }
   } else {
-    console.log("Please use a number");
+    console.log("Please use a number, my friend");
   }
 }
 
 // Function to delete a task from the array
 function deleteToDoItem(todoId) {
   if (Number.isInteger(todoId) && todoId > 0) {
-    console.log("Good ID");
+    console.log("Excellent choice of ID");
     let goneArray = [];
     let removed = false;
 
     for (let i = 0; i < todoItems.length; i++) {
       if (todoItems[i].id === todoId) {
-        console.log("Removed");
+        console.log("Successfully removed!");
         removed = true;
       } else {
         goneArray.push(todoItems[i]);
@@ -88,12 +88,12 @@ function deleteToDoItem(todoId) {
     }
 
     if (!removed) {
-      console.log("Todo item with the provided ID not found");
+      console.log("Couldn't find a todo with that ID");
     }
 
     todoItems = goneArray;
   } else {
-    console.log("Please input a valid ID");
+    console.log("Please input a valid ID, my friend");
   }
 }
 
@@ -110,10 +110,10 @@ function clearCompletedTasks() {
   todoItems = completedTasks;
 }
 
-addToDoItem("First task");
-addToDoItem("Second task");
-removeToDoItem(2);
-markToDoItemAsCompleted(1);
-deleteToDoItem(3);
+addToDoItem("Third task");
+addToDoItem("Fourth task");
+removeToDoItem(1);
+markToDoItemAsCompleted(2);
+deleteToDoItem(4);
 clearCompletedTasks();
 console.log(todoItems);
