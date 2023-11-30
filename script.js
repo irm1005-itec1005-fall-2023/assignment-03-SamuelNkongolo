@@ -1,119 +1,211 @@
-// Data storage - Initialize the array of To Do items
-let todoItems = [];
-let unique = [0];
+/* Assignment 04: Finishing a Todo List App
+ *
+ * 
+ *
+ */
 
-// Function to add a todo to the list
-function addToDoItem(text) {
-  if (typeof text === "string") {
-    console.log("Thanks a lot!");
-    unique[0]++;
-    let isCompleted = false;
-    let ID = unique[0];
 
-    // Check if ID already exists, generate a new one if needed
-    while (todoItems.some(item => item.id === ID)) {
-      ID = unique[0];
-    }
+// Variables
+let tasks = [];
+let nextTaskID = 1;
 
-    let Obj = { id: ID, text: text, completed: isCompleted };
-    todoItems.push(Obj);
-    console.log(todoItems);
+// DOM Elements
+let taskListElement = document.getElementById("TaskList");
+let taskInputElement = document.getElementById("TodoInput");
+let addTaskButton = document.getElementById("AddTask");
+let clearTasksButton = document.getElementById("ClearTasks");
+let completeAllButton = document.getElementById("CompleteAll");
+
+// Functions
+function showNotification(message) {
+  const notificationElement = document.getElementById("notificationArea");
+  notificationElement.textContent = message;
+}
+
+// Function to toggle the visibility of the Death Note container
+function toggleDeathNoteContainer() {
+  const deathNoteContainer = document.getElementById("DeathNoteContainer");
+  const openDeathNoteButton = document.getElementById("OpenDeathNote");
+
+  if (deathNoteContainer.style.display === "none") {
+    // Show the Death Note container
+    deathNoteContainer.style.display = "block";
+    openDeathNoteButton.textContent = "Close Death Note";
   } else {
-    console.log("Please input a string, my friend");
+    // Hide the Death Note container
+    deathNoteContainer.style.display = "none";
+    openDeathNoteButton.textContent = "Open Death Note";
   }
 }
 
-// Function to remove a todo from the list
-function removeToDoItem(todoId) {
-  if (Number.isInteger(todoId) && todoId > 0) {
-    console.log("Nice choice of ID");
-    let diffArray = [];
-    let removed = false;
+// Event listener for the "Open Death Note" button
+const openDeathNoteButton = document.getElementById("OpenDeathNote");
+openDeathNoteButton.addEventListener("click", toggleDeathNoteContainer);
 
-    for (let i = 0; i < todoItems.length; i++) {
-      if (todoItems[i].id === todoId) {
-        console.log("Successfully removed!");
-        removed = true;
-      } else {
-        diffArray.push(todoItems[i]);
-      }
-    }
-    if (!removed) {
-      console.log("Sorry, couldn't find the todo with that ID");
+// Initial hiding of the Death Note container
+document.addEventListener("DOMContentLoaded", function () {
+  const deathNoteContainer = document.getElementById("DeathNoteContainer");
+  deathNoteContainer.style.display = "none";
+});
+
+
+function displayTaskList() {
+  taskListElement.innerHTML = "";
+
+  const storedTasks = JSON.parse(localStorage.getItem("tasks"));
+
+  tasks = storedTasks || tasks;
+
+  for (const task of tasks) {
+    const taskItem = document.createElement("li");
+    taskItem.innerHTML =
+      `<h2${task.completed ? ' class="completed-task"' : ''}>${task.description}</h2>
+      <span>${task.id}</span>
+      <button data-id="${task.id}" class="remove-btn">Spare</button>
+      <button data-id="${task.id}" class="complete-btn">${task.completed ? 'Unkill' : 'Kill'}</button>
+      <button data-id="${task.id}" class="edit-btn">Edit</button>`;
+
+    if (task.completed) {
+      const checkMark = document.createElement("span");
+      checkMark.innerHTML = "✅";
+      checkMark.classList.add("status-icon");
+      taskItem.appendChild(checkMark);
     }
 
-    todoItems = diffArray;
+    taskListElement.appendChild(taskItem);
+  }
+}
+
+function handleAddTask() {
+  const description = taskInputElement.value.trim();
+
+  if (description !== "") {
+    createTask(description);
+    taskInputElement.value = "";
+    displayTaskList();
   } else {
-    console.log("Please input a valid ID, my friend");
+    showNotification("You can't kill nothing");
   }
 }
 
-// Function to mark a task as completed
-function markToDoItemAsCompleted(todoId) {
-  if (Number.isInteger(todoId) && todoId > 0) {
-    console.log(todoItems[0].id);
+function showNotification(message) {
+  const notificationElement = document.getElementById("notificationArea");
+  notificationElement.textContent = message;
 
-    let found = false;
+  setTimeout(() => {
+    notificationElement.textContent = "";
+  }, 3000);
+}
 
-    for (let i = 0; i < todoItems.length; i++) {
-      if (todoItems[i].id === todoId) {
-        todoItems[i].completed = true;
-        found = true;
-        console.log("Successfully marked as completed!");
-      }
+function handleTaskClick(event) {
+  const taskID = parseInt(event.target.getAttribute("data-id"));
+
+  if (event.target.classList.contains("remove-btn")) {
+    removeTask(taskID);
+  } else if (event.target.classList.contains("complete-btn")) {
+    toggleTaskCompletion(taskID);
+    if (event.target.textContent === "Kill") {
+      showNotification("Splendid job, sir!");
+    } else if (event.target.textContent === "Unkill") {
+      showNotification("Boohooo :(");
     }
+  } else if (event.target.classList.contains("edit-btn")) {
+    editTaskDescription(taskID);
+  } else if (event.target.classList.contains("spare-btn")) {
+    showNotification("He got lucky");
+  }
 
-    if (!found) {
-      console.log("Couldn't find a todo with that ID");
-    }
-  } else {
-    console.log("Please use a number, my friend");
+  displayTaskList();
+}
+
+function toggleTaskCompletion(taskID) {
+  const taskIndex = tasks.findIndex((task) => task.id === taskID);
+
+  if (taskIndex !== -1) {
+    tasks[taskIndex].completed = !tasks[taskIndex].completed;
+
+    // Update stored tasks in localStorage
+    updateStoredTasks();
   }
 }
 
-// Function to delete a task from the array
-function deleteToDoItem(todoId) {
-  if (Number.isInteger(todoId) && todoId > 0) {
-    console.log("Excellent choice of ID");
-    let goneArray = [];
-    let removed = false;
+function createTask(description) {
+  let task = {
+    id: getNextTaskID(),
+    description: description,
+    completed: false,
+  };
 
-    for (let i = 0; i < todoItems.length; i++) {
-      if (todoItems[i].id === todoId) {
-        console.log("Successfully removed!");
-        removed = true;
-      } else {
-        goneArray.push(todoItems[i]);
-      }
-    }
+  tasks.push(task);
 
-    if (!removed) {
-      console.log("Couldn't find a todo with that ID");
-    }
+  // Update stored tasks in localStorage
+  updateStoredTasks();
+  displayTaskList();
+}
 
-    todoItems = goneArray;
-  } else {
-    console.log("Please input a valid ID, my friend");
+function getNextTaskID() {
+  return tasks.length > 0 ? Math.max(...tasks.map(task => task.id)) + 1 : 1;
+}
+
+
+
+function markTaskAsCompleted(taskID) {
+  const taskIndex = tasks.findIndex((task) => task.id === taskID);
+
+  if (taskIndex !== -1) {
+    tasks[taskIndex].completed = true;
   }
 }
 
-// Function to clear all completed tasks
-function clearCompletedTasks() {
-  let completedTasks = [];
+function removeTask(taskID) {
+  tasks = tasks.filter((task) => task.id !== taskID);
 
-  for (let i = 0; i < todoItems.length; i++) {
-    if (!todoItems[i].completed) {
-      completedTasks.push(todoItems[i]);
-    }
-  }
-
-  todoItems = completedTasks;
+  // Update stored tasks in localStorage
+  updateStoredTasks();
+  displayTaskList();
 }
 
-addToDoItem("Complete coding assignment");
-addToDoItem("Schedule project meeting");
-removeToDoItem(1);
-markToDoItemAsCompleted(2);
-deleteToDoItem(3);
-clearCompletedTasks();
-console.log(todoItems);
+function editTaskDescription(taskID) {
+  const taskIndex = tasks.findIndex((task) => task.id === taskID);
+
+  if (taskIndex !== -1) {
+    const newDescription = prompt("Enter new task description:", tasks[taskIndex].description);
+
+    if (newDescription !== null) {
+      tasks[taskIndex].description = newDescription.trim();
+
+      // Update stored tasks in localStorage
+      updateStoredTasks();
+    }
+  }
+}
+
+function updateStoredTasks() {
+  // Update stored tasks in localStorage
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+function clearAllTasks() {
+  tasks = [];
+  displayTaskList();
+}
+
+function handleCompleteAll() {
+  // Mark all tasks as completed
+  tasks.forEach(task => {
+    task.completed = true;
+  });
+
+  // Update stored tasks in localStorage
+  updateStoredTasks();
+  displayTaskList();
+}
+
+// Event Listeners
+addTaskButton.addEventListener("click", handleAddTask);
+taskListElement.addEventListener("click", handleTaskClick);
+clearTasksButton.addEventListener("click", clearAllTasks);
+completeAllButton.addEventListener("click", handleCompleteAll);
+
+// Initial rendering
+displayTaskList();
