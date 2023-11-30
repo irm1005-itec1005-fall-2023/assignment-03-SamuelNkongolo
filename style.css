@@ -1,80 +1,156 @@
-/*
- * CSS File for the solution
- * Assignment 03
- * You can modify these styles but you don't have to
- */
+/* Body styles */
+body {
+  background-color: whitesmoke; 
+  background-image: url(./HD-wallpaper-death-note-notebook-notebook-shinigami-death-note-anime.jpg);
+  background-size: 10px 30px; 
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed; 
+  margin: 0;
+}
 
 
- body {
-  color: #3c544a;
-  font-family: Arial, Helvetica, sans-serif;
-  background-color: #ff9e00;
+/* Navbar styles */
+header {
+  background-color: black;
+  position: fixed;
+  width: 100%;
+  z-index: 1000; 
+  left: 0;
+}
 
+.navbar {
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
+  height: 80px; 
+}
 
+.navbar-content {
+  max-width: 1200px; 
+  width: 100%;
+  padding: 0 20px;
+}
+
+.navbar-title {
+  font-size: 2rem;
+  color: white;
+  font-weight: bold;
+  font-family: 'Marker Felt', fantasy;                                          
+  letter-spacing: 10px; 
+  text-transform: uppercase; 
 }
 
 main {
-  margin: 1rem 1rem;
-  border-radius: 2rem;
-  padding: 1rem 2rem;
-
-  border: 4px solid #240046;
-  background-color: #cdb0e5;
-  color: #240046;
-  max-width: 600px;
-
-  display: block;
-}
-
-@media screen and (min-width: 900px) {
-  main {
-    max-width: 800px;
-  }
-
-}
-
-@media screen and (min-width: 1200px) {
-  main {
-    max-width: 1100px;
-  }
-
-}
-
-h2 {
-  margin-top: 1rem;
-}
-
-.btn-container {
+  min-height: 100vh;
   display: flex;
-  flex-direction: row;
   justify-content: center;
   align-items: center;
 }
 
-.btn {
-  margin: 1rem 0 0.5rem 0;
-  display: inline-block;
-  padding: 1rem 4rem;
-  border-radius: 2rem;
-  border: 4px solid #240046;
-  background-color: #9d4edd;
-  color: #240046;
-  font-size: 1.5rem;
-  font-weight: 700;
-  text-decoration: none;
-  text-align: center;
-  transition: all 0.2s ease-in;
-  cursor: pointer;
+.completed-task {
+  text-decoration: line-through;
 }
 
-.btn:hover {
-  border-color: #ff6d00;
-  background-color: #ff8500;
-  color: #2b2d42;
+.Container {
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 50px auto;
+  position: relative;
+  max-width: 600px;
+  background-image: linear-gradient(0deg, transparent 10px, #ccc 10px, #ccc 11px, transparent 11px);
+  background-size: 100% 22px; 
+  cursor: url(./iconmonstr-pencil-9.svg), auto;
+}
+
+.notepad-bar {
+  color: red;
+  font-size: 2rem;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.todo-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.todo-list li {
+  padding: 15px;
+  border-bottom: 1px solid #ccc;
+  color: red;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.todo-list li:last-child {
+  border-bottom: none;
+}
+
+.Input-Container {
+  border-radius: 10px;
+  overflow: hidden; 
+}
+
+
+#TodoInput {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-right: 10px;
+  width: 70%;
+}
+
+
+#AddTask,
+#CompleteAll {
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  margin-top: 10px;
+  cursor: pointer;
+  background-color: red;
+  color: white;
+  font-size: 1rem;
+}
+
+
+#AddTask:hover,
+#CompleteAll:hover {
+  background-color: darkred;
+}
+
+
+.todo-list li button {
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin-right: 5px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+
+.todo-list li button:hover {
+  background-color: #ccc;
+}
+
+.logo-img {
+  width: 100px; 
+  height: auto; 
+  margin-right: 10px;
+}
+
+.responsibility-message {
+  color: red;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 20px; 
 }
 
 
@@ -90,3 +166,4 @@ h2 {
   white-space: nowrap;
   border-width: 0;
 }
+

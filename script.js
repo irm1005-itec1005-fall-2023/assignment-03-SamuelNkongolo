@@ -1,107 +1,211 @@
-/* Assignment 03: Starting a Todo List App
+/* Assignment 04: Finishing a Todo List App
  *
- * You are going to build the brains of a simple Todo List application
- * in JavaScript. You don't have to worry about the look of the app for now.
- * We will make it look awesome in Assignment 04.
- *
- * For now, we'll focus on giving the application the following features:
- * 1. Add a new todo item
- * 2. Delete a todo item
- * 3. Mark a todo item as completed
- * 4. Delete a todo item
- * 5. Clear all completed todos
- *
- * The following code is the starting point for this assignment.
- *
- * You will have to write the code to initialise the todoItems array and
- * for the functions below.
- *
- * 1. addToDoItem(text)
- * 2. removeToDoItem(todoId)
- * 3. markToDoItemAsCompleted(todoId)
- * 4. deleteToDoItem(todoId)
- * 5. clearCompletedTasks()
- *
- * YOU MUST NOT CHANGE ANY OF THE FUNCTION NAMES OR THE AUTOMATED TESTS WILL FAIL
- *
- * As you write each function, press on the "Run Tests" button in the browser
- * to run the automated tests and check your work.
- *
- * You can also add your own tests and debug statements at the bottom of this file.
+ * 
  *
  */
 
 
-// Data storage - Initialize the array of To Do items
-//
-// NOTE:
-//
-// You must use the following object literal structure when creating new todo items
-// {
-//   id: 0,
-//   text: "This is a todo item",
-//   completed: false,
-// }
+// Variables
+let tasks = [];
+let nextTaskID = 1;
 
-// Initialise an empty array with the variable name todoItems
+// DOM Elements
+let taskListElement = document.getElementById("TaskList");
+let taskInputElement = document.getElementById("TodoInput");
+let addTaskButton = document.getElementById("AddTask");
+let clearTasksButton = document.getElementById("ClearTasks");
+let completeAllButton = document.getElementById("CompleteAll");
 
-// Function to add a todo to the list
-// It should accept a string as a parameter (text of the todo item)
-// and it should add a new todo item to the todoItems array
-// the function does not need to return anything
-function addToDoItem(text) {
-  // Implement the logic to add a task here
-
-  console.log("NOT YET IMPLEMENTED"); // Remove this line when you start working on the function
+// Functions
+function showNotification(message) {
+  const notificationElement = document.getElementById("notificationArea");
+  notificationElement.textContent = message;
 }
 
-// Function to remove a todo to the list
-// It should accept a number as a parameter (id of the todo item)
-// Loop through the array of todos, and when you find the todo item with the id
-// that matches the id passed to the function, remove it from the array
-// the function does not need to return anything
-function removeToDoItem(todoId) {
-  // Implement the logic to add a task here
+// Function to toggle the visibility of the Death Note container
+function toggleDeathNoteContainer() {
+  const deathNoteContainer = document.getElementById("DeathNoteContainer");
+  const openDeathNoteButton = document.getElementById("OpenDeathNote");
 
-  console.log("NOT YET IMPLEMENTED"); // Remove this line when you start working on the function
+  if (deathNoteContainer.style.display === "none") {
+    // Show the Death Note container
+    deathNoteContainer.style.display = "block";
+    openDeathNoteButton.textContent = "Close Death Note";
+  } else {
+    // Hide the Death Note container
+    deathNoteContainer.style.display = "none";
+    openDeathNoteButton.textContent = "Open Death Note";
+  }
 }
 
-// Function to mark a task as completed
-// It should accept a number as a parameter (id of the todo item)
-// Loop through the array of todos, and when you find the todo item with the id
-// that matches the id passed to the function, set its completed property to true
-// the function does not need to return anything
-function markToDoItemAsCompleted(todoId) {
-  // Implement the logic to mark a task as completed here
+// Event listener for the "Open Death Note" button
+const openDeathNoteButton = document.getElementById("OpenDeathNote");
+openDeathNoteButton.addEventListener("click", toggleDeathNoteContainer);
 
-  console.log("NOT YET IMPLEMENTED"); // Remove this line when you start working on the function
+// Initial hiding of the Death Note container
+document.addEventListener("DOMContentLoaded", function () {
+  const deathNoteContainer = document.getElementById("DeathNoteContainer");
+  deathNoteContainer.style.display = "none";
+});
+
+
+function displayTaskList() {
+  taskListElement.innerHTML = "";
+
+  const storedTasks = JSON.parse(localStorage.getItem("tasks"));
+
+  tasks = storedTasks || tasks;
+
+  for (const task of tasks) {
+    const taskItem = document.createElement("li");
+    taskItem.innerHTML =
+      `<h2${task.completed ? ' class="completed-task"' : ''}>${task.description}</h2>
+      <span>${task.id}</span>
+      <button data-id="${task.id}" class="remove-btn">Spare</button>
+      <button data-id="${task.id}" class="complete-btn">${task.completed ? 'Unkill' : 'Kill'}</button>
+      <button data-id="${task.id}" class="edit-btn">Edit</button>`;
+
+    if (task.completed) {
+      const checkMark = document.createElement("span");
+      checkMark.innerHTML = "✅";
+      checkMark.classList.add("status-icon");
+      taskItem.appendChild(checkMark);
+    }
+
+    taskListElement.appendChild(taskItem);
+  }
 }
 
-// Function to delete a task from the array
-// It should accept a number as a parameter (id of the todo item)
-// Loop through the array of todos, and when you find the todo item with the id
-// that matches the id passed to the function, remove it from the array
-// the function does not need to return anything, though you can return
-// true or false depending on whether the item was successfully deleted
-function deleteToDoItem(todoId) {
-  // Implement the logic to remove a task here
+function handleAddTask() {
+  const description = taskInputElement.value.trim();
 
-  console.log("NOT YET IMPLEMENTED"); // Remove this line when you start working on the function
+  if (description !== "") {
+    createTask(description);
+    taskInputElement.value = "";
+    displayTaskList();
+  } else {
+    showNotification("You can't kill nothing");
+  }
 }
 
-// Function to clear all completed tasks
-// Loop through the array of todos, and when you find a todo item that is marked
-// as completed, remove it completely from the array
-function clearCompletedTasks() {
-  // Implement the logic to clear completed tasks here
+function showNotification(message) {
+  const notificationElement = document.getElementById("notificationArea");
+  notificationElement.textContent = message;
 
-  console.log("NOT YET IMPLEMENTED"); // Remove this line when you start working on the function
+  setTimeout(() => {
+    notificationElement.textContent = "";
+  }, 3000);
 }
 
-// You can write your own tests here if you would like to test
-// your code before using the automated tests
-// For example, you could run:
-//  addToDoItem("Test ToDo"); // This should add a new todo item to the array
-//  console.log(todoItems); // This should show the todo item you added
-//  removeToDoItem(0); // This should remove the todo item with ID 0 from the array
-//  markToDoItemAsCompleted(0); // This should mark the todo item with ID 0 as completed
+function handleTaskClick(event) {
+  const taskID = parseInt(event.target.getAttribute("data-id"));
+
+  if (event.target.classList.contains("remove-btn")) {
+    removeTask(taskID);
+  } else if (event.target.classList.contains("complete-btn")) {
+    toggleTaskCompletion(taskID);
+    if (event.target.textContent === "Kill") {
+      showNotification("Splendid job, sir!");
+    } else if (event.target.textContent === "Unkill") {
+      showNotification("Boohooo :(");
+    }
+  } else if (event.target.classList.contains("edit-btn")) {
+    editTaskDescription(taskID);
+  } else if (event.target.classList.contains("spare-btn")) {
+    showNotification("He got lucky");
+  }
+
+  displayTaskList();
+}
+
+function toggleTaskCompletion(taskID) {
+  const taskIndex = tasks.findIndex((task) => task.id === taskID);
+
+  if (taskIndex !== -1) {
+    tasks[taskIndex].completed = !tasks[taskIndex].completed;
+
+    // Update stored tasks in localStorage
+    updateStoredTasks();
+  }
+}
+
+function createTask(description) {
+  let task = {
+    id: getNextTaskID(),
+    description: description,
+    completed: false,
+  };
+
+  tasks.push(task);
+
+  // Update stored tasks in localStorage
+  updateStoredTasks();
+  displayTaskList();
+}
+
+function getNextTaskID() {
+  return tasks.length > 0 ? Math.max(...tasks.map(task => task.id)) + 1 : 1;
+}
+
+
+
+function markTaskAsCompleted(taskID) {
+  const taskIndex = tasks.findIndex((task) => task.id === taskID);
+
+  if (taskIndex !== -1) {
+    tasks[taskIndex].completed = true;
+  }
+}
+
+function removeTask(taskID) {
+  tasks = tasks.filter((task) => task.id !== taskID);
+
+  // Update stored tasks in localStorage
+  updateStoredTasks();
+  displayTaskList();
+}
+
+function editTaskDescription(taskID) {
+  const taskIndex = tasks.findIndex((task) => task.id === taskID);
+
+  if (taskIndex !== -1) {
+    const newDescription = prompt("Enter new task description:", tasks[taskIndex].description);
+
+    if (newDescription !== null) {
+      tasks[taskIndex].description = newDescription.trim();
+
+      // Update stored tasks in localStorage
+      updateStoredTasks();
+    }
+  }
+}
+
+function updateStoredTasks() {
+  // Update stored tasks in localStorage
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+function clearAllTasks() {
+  tasks = [];
+  displayTaskList();
+}
+
+function handleCompleteAll() {
+  // Mark all tasks as completed
+  tasks.forEach(task => {
+    task.completed = true;
+  });
+
+  // Update stored tasks in localStorage
+  updateStoredTasks();
+  displayTaskList();
+}
+
+// Event Listeners
+addTaskButton.addEventListener("click", handleAddTask);
+taskListElement.addEventListener("click", handleTaskClick);
+clearTasksButton.addEventListener("click", clearAllTasks);
+completeAllButton.addEventListener("click", handleCompleteAll);
+
+// Initial rendering
+displayTaskList();
